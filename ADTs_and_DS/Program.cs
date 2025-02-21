@@ -43,3 +43,30 @@ Console.WriteLine(arrayBasedVector);
 Console.WriteLine($"Removing element at rank 1. Element removed is {arrayBasedVector.RemoveElementAtRank(1)}");
 Console.WriteLine(arrayBasedVector);
 
+Console.Clear();
+
+
+// I will be creating arrays of different lenghts
+// Create operations for these lengths - compare the time for each operation and each problem size
+int[] arraySizes = new int[] { 100, 200, 300, 400 };
+int valueToInsert = 11;
+
+foreach (int n in arraySizes)
+{
+    ArrayBasedVector<int> abv = CreateABVWithCount(n);
+    int timeToInsert = abv.InsertElementAtRankTwo(0, valueToInsert);
+
+    Console.WriteLine(timeToInsert);
+}
+
+ArrayBasedVector<int> CreateABVWithCount(int n)
+{
+    ArrayBasedVector<int> output = new ArrayBasedVector<int>(2 * n);
+
+    for (int i = 0; i < n; i++)
+    {
+        output.InsertElementAtRank(i, 1);
+    }
+
+    return output;
+}

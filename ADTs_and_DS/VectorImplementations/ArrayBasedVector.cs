@@ -63,7 +63,7 @@ namespace ADTs_and_DS.VectorImplementations
         public T GetElementAtRank(int rank)
         {
             // Validation
-            if (rank < 0 || rank >= count)
+            if (rank < 0 || rank >= count)  // 1 time step
             {
                 // this element at the rank being passed as a parameter does not exist!
                 // Remember: the rank of the 1st element is 0, the rank of the last element is count - 1
@@ -71,7 +71,8 @@ namespace ADTs_and_DS.VectorImplementations
             }
 
             // The element at the rank passed as a parameter is at index rank
-            return array[rank];
+            T retrievedElement = array[rank]; // 1 time step
+            return retrievedElement;            // 1 time step
         }
         public bool IsEmpty()
         {
@@ -91,6 +92,11 @@ namespace ADTs_and_DS.VectorImplementations
             return count == 0;
         }
 
+        public void InsertElementAtRank(int rank, T element)
+        {
+            InsertElementAtRankTwo(rank, element);
+        }
+
         /// <summary>
         /// The operation takes an element and places the element in the position indicated by the rank
         /// Since there may be other elements (at the rank and behind the given rank), we need to make space for the new element
@@ -98,9 +104,12 @@ namespace ADTs_and_DS.VectorImplementations
         /// <param name="rank"></param>
         /// <param name="element"></param>
         /// <exception cref="NotImplementedException"></exception>
-        public void InsertElementAtRank(int rank, T element)
+        public int InsertElementAtRankTwo(int rank, T element)
         {
+            int time = 0;
+
             // Validation
+            time++;
             if (rank < 0 || rank > count)
             {
                 // Possible positions are between rank 0 (first element) and count (this mean we will append the new element)
@@ -108,6 +117,7 @@ namespace ADTs_and_DS.VectorImplementations
             }
 
             // Check whether the array is full
+            time++;
             if (array.Length == count)
             {
                 // the array is full
@@ -117,6 +127,7 @@ namespace ADTs_and_DS.VectorImplementations
 
                 // Copy everything over
                 array.CopyTo( newArray, 0 );
+                time += count; // we copied count elements!
 
                 /* Easier to read the above call, in reality, we are copying all the elements over to the new array
                 // Equivalent to the CopyTo method...
@@ -127,6 +138,7 @@ namespace ADTs_and_DS.VectorImplementations
                 */
 
                 // replace the array with the new, larger array
+                time++;
                 array = newArray;
             }
 
@@ -142,17 +154,30 @@ namespace ADTs_and_DS.VectorImplementations
             }
             */
 
+            // When rank = count (appending), the code inside the loop does not even execute once!
+            // Best case!
+            // When rank = 0 (prepending), the code inside the loop needs to shift every single element once
+            // This means that the code inside the loop is repeated count times (the number of elements)
+            // The larger the number of elements, the more times I need to shift the element
+            // Worst Case, code inside the loop repeats n = count times
+
             // start shifting from the last element (at count - 1),
             // keep shifting until the position at rank is freed
+            time++; // for the loop initialisation
             for (int i = count - 1; i >= rank; i--)
             {
+                time++; // copy one element over
                 array[i + 1] = array[i];
             }
 
             // place the new element in the correct position
+            time++;
             array[rank] = element;
             // there is now 1 new element, so increment count
+            time++;
             count++;
+
+            return time;
         }
 
 
@@ -160,10 +185,15 @@ namespace ADTs_and_DS.VectorImplementations
         {
             T elementToBeRemoved = GetElementAtRank(rank);
 
+            // all element are copied back
             for (int i = rank; i < count - 1; i++)
             {
                 array[i] = array[i + 1];
             }
+
+            // the last position at count - 1, is NOT overwritten
+            // this means that the value at position count - 1 is still available even though I can't access this
+            // this can lead to a memory leak (if it is not used or disposed of)
 
             // remove the value stored where the last element was before
             array[count - 1] = default!;
