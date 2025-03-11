@@ -1,42 +1,23 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using ADTs_and_DS.Interfaces;
+using ADTs_and_DS.Linked_Lists;
 using ADTs_and_DS.Stacks_and_Queues_using_ABV;
 using ADTs_and_DS.VectorImplementations;
 using System.Diagnostics;
 
 
-int number_of_elements_to_push = 100000;
-Stack_using_ABV<string> _stack = new Stack_using_ABV<string>();
-_stack.Push("A");
-_stack.Push("B");
-_stack.Push("C");
-_stack.Push("D");
+SinglyLinkedList<string> mySinglyLinkedList = new SinglyLinkedList<string>();
 
-while (!_stack.IsEmpty())
-{
-    Console.WriteLine(_stack.Pop());
-}
+mySinglyLinkedList.InsertFirst("C");
+mySinglyLinkedList.InsertFirst("B");
+mySinglyLinkedList.InsertFirst("A");
+
+Console.WriteLine(mySinglyLinkedList);
 
 
-Stack_using_ABV<int> myStack = new Stack_using_ABV<int>();
 
-Stopwatch stopwatch = new Stopwatch();
 
-for (int i = 0; i < number_of_elements_to_push; i++)
-{
-    stopwatch.Start();
-    myStack.Push(i);
-    stopwatch.Stop();
-}
-
-while (!myStack.IsEmpty())
-{
-    stopwatch.Start();
-    myStack.Pop();
-    stopwatch.Stop();
-}
-
-Console.WriteLine(stopwatch.Elapsed.TotalMilliseconds);
+//Stack_ABV_test();
 
 
 
@@ -112,4 +93,40 @@ void ABV_test()
 
         Console.WriteLine(timeToInsert);
     }
+}
+
+static void Stack_ABV_test()
+{
+    int number_of_elements_to_push = 100000;
+    Stack_using_ABV<string> _stack = new Stack_using_ABV<string>();
+    _stack.Push("A");
+    _stack.Push("B");
+    _stack.Push("C");
+    _stack.Push("D");
+
+    while (!_stack.IsEmpty())
+    {
+        Console.WriteLine(_stack.Pop());
+    }
+
+
+    Stack_using_ABV<int> myStack = new Stack_using_ABV<int>();
+
+    Stopwatch stopwatch = new Stopwatch();
+
+    for (int i = 0; i < number_of_elements_to_push; i++)
+    {
+        stopwatch.Start();
+        myStack.Push(i);
+        stopwatch.Stop();
+    }
+
+    while (!myStack.IsEmpty())
+    {
+        stopwatch.Start();
+        myStack.Pop();
+        stopwatch.Stop();
+    }
+
+    Console.WriteLine(stopwatch.Elapsed.TotalMilliseconds);
 }
