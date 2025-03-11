@@ -73,7 +73,7 @@ namespace ADTs_and_DS.Linked_Lists
             // the tail node has a Next value equal to null
 
             // while cursor is NOT equal to the tail
-            while (cursor.Next != null)
+            while (cursor.Next != null) // cursor != tail
             {
                 // try the next node: move one step forward
                 cursor = cursor.Next;
