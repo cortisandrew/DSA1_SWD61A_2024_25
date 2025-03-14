@@ -2,17 +2,49 @@
 using ADTs_and_DS.Interfaces;
 using ADTs_and_DS.Linked_Lists;
 using ADTs_and_DS.Stacks_and_Queues_using_ABV;
+using ADTs_and_DS.Stacks_and_Queues_using_LinkedLists;
 using ADTs_and_DS.VectorImplementations;
 using System.Diagnostics;
 
 
-SinglyLinkedList<string> mySinglyLinkedList = new SinglyLinkedList<string>();
+Queue_using_LinkedList<string> _queue = new Queue_using_LinkedList<string>();
 
-mySinglyLinkedList.InsertFirst("C");
-mySinglyLinkedList.InsertFirst("B");
-mySinglyLinkedList.InsertFirst("A");
+_queue.Enqueue("A");
+_queue.Enqueue("B");
+_queue.Enqueue("C");
 
-Console.WriteLine(mySinglyLinkedList);
+Console.WriteLine(_queue.Dequeue());
+Console.WriteLine(_queue.Dequeue());
+Console.WriteLine(_queue.Dequeue());
+
+
+int numberOfElementsToEnqueue = 100000;
+
+Queue_using_LinkedList<int> _queueInt = new Queue_using_LinkedList<int>();
+
+Stopwatch _stopwatch = new Stopwatch();
+
+for (int i = 0;  i < numberOfElementsToEnqueue; i++)
+{
+    _stopwatch.Start();
+    _queueInt.Enqueue(i);
+    _stopwatch.Stop();
+}
+
+while (!_queue.IsEmpty())
+{
+    _stopwatch.Start();
+    _queue.Dequeue();
+    _stopwatch.Stop();
+}
+
+// About 17 seconds before implementing the Tail
+// After maintaining a Tail of list, the total time is about 5ms
+Console.WriteLine(_stopwatch.ElapsedMilliseconds);
+
+
+
+// TestSinglyLinkedList();
 
 
 
@@ -129,4 +161,15 @@ static void Stack_ABV_test()
     }
 
     Console.WriteLine(stopwatch.Elapsed.TotalMilliseconds);
+}
+
+static void TestSinglyLinkedList()
+{
+    SinglyLinkedList<string> mySinglyLinkedList = new SinglyLinkedList<string>();
+
+    mySinglyLinkedList.InsertFirst("C");
+    mySinglyLinkedList.InsertFirst("B");
+    mySinglyLinkedList.InsertFirst("A");
+
+    Console.WriteLine(mySinglyLinkedList);
 }
