@@ -145,7 +145,66 @@ namespace ADTs_and_DS.Linked_Lists
         /// </summary>
         /// <returns></returns>
         /// <exception cref="NotImplementedException"></exception>
-        public T RemoveLast() {  throw new NotImplementedException(); }
+        public T RemoveLast()
+        {
+            // Special Case:
+            if (tail == null)
+            {
+                // the linked list is empty
+                throw new InvalidOperationException("There are no elements to remove!");
+            }
+
+            // Special case:
+            if (head == tail)
+            {
+                // there is ONLY 1 element
+                return RemoveFirst();
+            }
+
+            // "General Case"
+            // More than 1 element
+            T elementToReturn = tail.Element;
+
+            // We need to get the node Previous to the last node!
+            SinglyLinkedListNode<T> previousNode = Previous(tail);
+
+            // the Previous node is now the tail... i.e. there are no other nodes behind this one
+            previousNode.Next = null;
+            tail = previousNode;
+
+            count--;
+            return elementToReturn;
+        }
+
+        private SinglyLinkedListNode<T> Previous(SinglyLinkedListNode<T> cursor)
+        {
+            if (head == null)
+            {
+                throw new InvalidOperationException("No nodes in the linked list!");
+            }
+
+            SinglyLinkedListNode<T> currentNode = head;
+
+            // We are only happy when the currentNode.Next == cursor
+            // This is what we are looking for! (i.e. currentNode is the previous to cursor)
+            // When currentNode.Next == cursor, we can now return the currentNode
+
+            // while the currentNode is NOT the node I am looking for ("not happy")
+            // we need to keep looking
+            while (currentNode!.Next != cursor)
+            {
+                // since currentNode.Next != cursor, the original request (currentNode.Next == cursor) is NOT met!
+                // we need to keep looking
+
+                currentNode = currentNode.Next!; // Keep looking by moving 1 step forward
+            }
+
+            // Now currentNode.Next == cursor
+            return currentNode;
+
+            // Note: the cursor, might be NOT within the list!
+            // This is a invalid parameter that might cause an exception / bug!
+        }
 
         public void InsertAfter(SinglyLinkedListNode<T> cursor, T element)
         {
@@ -182,9 +241,28 @@ namespace ADTs_and_DS.Linked_Lists
             count++;
         }
 
-        public bool InsertBefore(SinglyLinkedListNode<T> cursor, T eleent)
+        /// <summary>
+        /// TODO: Exercise: Convince yourself that you will need to get the previous element to InsertBefore!
+        /// </summary>
+        /// <param name="cursor"></param>
+        /// <param name="element"></param>
+        /// <exception cref="InvalidOperationException"></exception>
+        public void InsertBefore(SinglyLinkedListNode<T> cursor, T element)
         {
-            throw new NotImplementedException();
+            if (cursor == null)
+            {
+                throw new InvalidOperationException();
+            }
+
+            if (cursor == head)
+            {
+                InsertFirst(element);
+                return; // Very important! otherwise you will fall through and insert the same element twice in this case!
+            }
+
+            // we will find this node, because cursor is NOT the first element / head
+            SinglyLinkedListNode<T> previousNode = Previous(cursor);
+            InsertAfter(previousNode, element);
         }
 
         public override string ToString()
