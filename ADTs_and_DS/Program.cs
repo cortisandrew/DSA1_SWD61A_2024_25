@@ -6,41 +6,91 @@ using ADTs_and_DS.Stacks_and_Queues_using_LinkedLists;
 using ADTs_and_DS.VectorImplementations;
 using System.Diagnostics;
 
+Stopwatch sw = new Stopwatch();
 
-Queue_using_LinkedList<string> _queue = new Queue_using_LinkedList<string>();
+// First run of the algorithm, discard the result
+// The first run will be slower: JIT compilation, memory requisition, etc...
+Queue_using_ABV<int> queue = new Queue_using_ABV<int>();
 
-_queue.Enqueue("A");
-_queue.Enqueue("B");
-_queue.Enqueue("C");
-
-Console.WriteLine(_queue.Dequeue());
-Console.WriteLine(_queue.Dequeue());
-Console.WriteLine(_queue.Dequeue());
-
-
-int numberOfElementsToEnqueue = 100000;
-
-Queue_using_LinkedList<int> _queueInt = new Queue_using_LinkedList<int>();
-
-Stopwatch _stopwatch = new Stopwatch();
-
-for (int i = 0;  i < numberOfElementsToEnqueue; i++)
+for (int i = 0; i < 1000; i++)
 {
-    _stopwatch.Start();
-    _queueInt.Enqueue(i);
-    _stopwatch.Stop();
+    sw.Start();
+    queue.Enqueue(i);
+    sw.Stop();
 }
 
-while (!_queue.IsEmpty())
+_ = queue.Dequeue();
+
+
+// Different values of n that we want to run empirical analysis for
+int[] problemSizes = new int[] { 50, 100, 1000, 10000, 20000, 40000 };
+int repetitions = 15;
+
+Console.WriteLine("Dequeue");
+Console.WriteLine("Problem Size, Time in ticks");
+foreach (int problemSize in problemSizes)
 {
-    _stopwatch.Start();
-    _queue.Dequeue();
-    _stopwatch.Stop();
+    // Reset the stopwatch back to 0
+    sw.Reset();
+
+    for (int j = 0; j < repetitions; j++)
+    {
+        // Setup the structure with the given problem size
+        // We have created a data structure of size equal to the problemSize (n)
+        queue = new Queue_using_ABV<int>();
+
+        for (int i = 0; i < problemSize; i++)
+        {
+            queue.Enqueue(i);
+        }
+
+        // Start the stopwatch
+        sw.Start();
+
+        // Run the code - we will get the time required to run this code
+        _ = queue.Dequeue();
+
+        // Stop the stopwatch
+        sw.Stop();
+    }
+    // Report time
+    Console.WriteLine($"{problemSize}, {sw.ElapsedTicks / (double)repetitions}");
 }
 
-// About 17 seconds before implementing the Tail
-// After maintaining a Tail of list, the total time is about 5ms
-Console.WriteLine(_stopwatch.ElapsedMilliseconds);
+
+Console.WriteLine("Enqueue");
+Console.WriteLine("Problem Size, Time in ticks");
+foreach (int problemSize in problemSizes)
+{
+    // Reset the stopwatch back to 0
+    sw.Reset();
+
+    for (int j = 0; j < repetitions; j++)
+    {
+        // Setup the structure with the given problem size
+        // We have created a data structure of size equal to the problemSize (n)
+        queue = new Queue_using_ABV<int>();
+
+        for (int i = 0; i < problemSize; i++)
+        {
+            queue.Enqueue(i);
+        }
+
+        // Start the stopwatch
+        sw.Start();
+
+        // Run the code - we will get the time required to run this code
+        queue.Enqueue(0);
+
+        // Stop the stopwatch
+        sw.Stop();
+    }
+    // Report time
+    Console.WriteLine($"{problemSize}, {sw.ElapsedTicks/(double)repetitions}");
+}
+
+
+//TestLinkedListQueue();
 
 
 
@@ -172,4 +222,42 @@ static void TestSinglyLinkedList()
     mySinglyLinkedList.InsertFirst("A");
 
     Console.WriteLine(mySinglyLinkedList);
+}
+
+static void TestLinkedListQueue()
+{
+    Queue_using_LinkedList<string> _queue = new Queue_using_LinkedList<string>();
+
+    _queue.Enqueue("A");
+    _queue.Enqueue("B");
+    _queue.Enqueue("C");
+
+    Console.WriteLine(_queue.Dequeue());
+    Console.WriteLine(_queue.Dequeue());
+    Console.WriteLine(_queue.Dequeue());
+
+
+    int numberOfElementsToEnqueue = 100000;
+
+    Queue_using_LinkedList<int> _queueInt = new Queue_using_LinkedList<int>();
+
+    Stopwatch _stopwatch = new Stopwatch();
+
+    for (int i = 0; i < numberOfElementsToEnqueue; i++)
+    {
+        _stopwatch.Start();
+        _queueInt.Enqueue(i);
+        _stopwatch.Stop();
+    }
+
+    while (!_queue.IsEmpty())
+    {
+        _stopwatch.Start();
+        _queue.Dequeue();
+        _stopwatch.Stop();
+    }
+
+    // About 17 seconds before implementing the Tail
+    // After maintaining a Tail of list, the total time is about 5ms
+    Console.WriteLine(_stopwatch.ElapsedMilliseconds);
 }

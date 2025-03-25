@@ -31,7 +31,7 @@ namespace ADTs_and_DS.VectorImplementations
             }
         }
 
-        private const int INITIAL_LENGTH = 5;
+        private const int INITIAL_LENGTH = 12000;
 
         /// <summary>
         /// The array that will store our elements (of type T)

@@ -25,18 +25,18 @@ namespace ADTs_and_DS.Stacks_and_Queues_using_ABV
         public void Enqueue(T element)
         {
             // Option i) Place the newest element at the last position of the array (Fast)
-            // _abv.InsertElementAtRank(Count, element);
+            _abv.InsertElementAtRank(Count, element);
 
             // Option ii) Place the newest element at position 0 of the array (Slow)
-            _abv.InsertElementAtRank(0, element);
+            // _abv.InsertElementAtRank(0, element);
         }
 
         public T Dequeue() {
             // Option i) The element that has been waiting the longest is at position 0 (Slow! - we need to shift all the other elements)
-            // return _abv.RemoveElementAtRank(0);
+            return _abv.RemoveElementAtRank(0);
 
             // Option ii) Fast
-            return _abv.RemoveElementAtRank(Count - 1);
+            // return _abv.RemoveElementAtRank(Count - 1);
         }
 
         public T Peek() {
