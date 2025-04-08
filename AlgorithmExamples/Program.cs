@@ -1,5 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
+using AlgorithmExamples;
+
+int[] unsorted = new int[] { 39, 45, 8, 16, 14, 37, 38 };
+
+Console.WriteLine(
+    String.Join(", ", SortingAlgorithms.MergeSort(unsorted)));
+
 /*
 int[] problemSizes = new int[] { 2, 4, 8, 16, 32, 64, 128 };
 
@@ -11,6 +18,7 @@ foreach (int n in problemSizes) {
 }
 */
 
+/*
 int n = 4;
 Console.WriteLine($"{n}, {H(n)}");
 
@@ -46,3 +54,4 @@ int H(int n)
     Console.WriteLine();
     return sum;
 }
+*/
