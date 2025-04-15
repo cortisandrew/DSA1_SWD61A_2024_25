@@ -25,6 +25,13 @@ namespace Trees
             return (childIndex - 1) / 2;
         }
 
+        /// <summary>
+        /// Because of the complete property, the height is O(log(n))
+        /// Therefore, Upheap goes up one level with each call
+        /// Worst call, it recursively calls itself log(n) times
+        /// Therefore, Add has a worst case O(log(n))
+        /// </summary>
+        /// <param name="value"></param>
         public void Add(int value)
         {
             // Add to the last position, to preserve the completeness property
@@ -57,6 +64,91 @@ namespace Trees
             Upheap(parentIndex);
         }
 
+        /// <summary>
+        /// O(log(n)) worst case
+        /// </summary>
+        /// <returns></returns>
+        public int RemoveMin()
+        {
+            int minValue = arrayBasedVector[0];
+
+            // copy the last value to the root
+            arrayBasedVector[0] = 
+                arrayBasedVector[arrayBasedVector.Count - 1];
+
+            // remove the last element
+            arrayBasedVector.RemoveAt(arrayBasedVector.Count - 1);
+
+            // tree is complete, but we may not have Heap order
+
+            DownHeap(0);
+
+            return minValue;
+        }
+
+        /// <summary>
+        /// Since the height is O(log(n)), this method is recursively called, O(log(n)) worst case
+        /// </summary>
+        /// <param name="index"></param>
+        private void DownHeap(int index)
+        {
+            // case i: no children, i.e. leaf node
+            int leftChildIndex = LeftChildIndex(index);
+
+            // the last element of the tree is at index
+            // arrayBasedVector.Count - 1
+            if (leftChildIndex >= arrayBasedVector.Count)
+            {
+                // there is no left child
+                // (this also means that I have no right child)
+                return;
+            }
+
+            int smallestChildIndex = -1;
+
+            // case ii: exactly one child
+            if (leftChildIndex == arrayBasedVector.Count - 1)
+            {
+                // the left child is exactly the last element of the array
+                smallestChildIndex = leftChildIndex;
+            } // case iii: two children
+            else // leftChildIndex < arrayBasedVector.Count - 1
+            {
+                // we have both children
+                int rightChildIndex = RightChildIndex(index);
+
+                if (arrayBasedVector[leftChildIndex] <= arrayBasedVector[rightChildIndex])
+                {
+                    // left child is <= right child
+                    smallestChildIndex = leftChildIndex;
+                }
+                else
+                {
+                    // rightChild > left child
+                    smallestChildIndex = rightChildIndex;
+                }
+            }
+
+            if (arrayBasedVector[index] > arrayBasedVector[smallestChildIndex])
+            {
+                // we do not have heap-order
+                // a larger value is on top of a smaller value
+                arrayBasedVector.Swap(index, smallestChildIndex);
+                DownHeap(smallestChildIndex);
+                return;
+            }
+            else
+            {
+                // smaller value is on top
+                // heap-order is restored!
+                return;
+            }
+        }
+
+        /// <summary>
+        /// Requires elements to be unique to work (otherwise we get issues with the graph)
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -90,6 +182,11 @@ namespace Trees
 
             sb.AppendLine("}");
             return sb.ToString();
+        }
+
+        internal bool IsEmpty()
+        {
+            return arrayBasedVector.Count == 0;
         }
     }
 }
