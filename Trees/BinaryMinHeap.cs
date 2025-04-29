@@ -147,6 +147,7 @@ namespace Trees
 
         /// <summary>
         /// Requires elements to be unique to work (otherwise we get issues with the graph)
+        /// ASSUMES: That there are no duplicate keys...
         /// </summary>
         /// <returns></returns>
         public override string ToString()

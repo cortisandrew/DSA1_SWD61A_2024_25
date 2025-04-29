@@ -3,13 +3,13 @@
 
 BinaryMinHeap minHeap = new BinaryMinHeap();
 
-int n = 10;
-Random rand = new Random();
+int n = 20;
+Random rand = new Random(1);
 List<int> randomIntegers = new List<int>();
 // Because of ToString, avoid adding duplicate values!
 for (int i = 0; i < n; i++)
 {
-    int newValue = rand.Next(1, 20);
+    int newValue = rand.Next(1, n*2);
     if (!randomIntegers.Contains(newValue))
     {
         minHeap.Add(newValue);
@@ -19,13 +19,12 @@ for (int i = 0; i < n; i++)
 
 Console.WriteLine(minHeap);
 
-Console.Clear();
 Console.WriteLine(minHeap.RemoveMin());
-Console.WriteLine(minHeap);
-
 
 Console.Clear();
 randomIntegers.Clear();
+Console.WriteLine(minHeap);
+
 
 //  repeat n times
 for (int i = 0; i < n; i++)
