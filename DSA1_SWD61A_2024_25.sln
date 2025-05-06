@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ADTs_and_DS", "ADTs_and_DS\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AlgorithmExamples", "AlgorithmExamples\AlgorithmExamples.csproj", "{6920E3B4-A6E6-4787-9A9D-199C40B3E946}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trees", "Trees\Trees.csproj", "{446FC381-D074-4DED-A1AF-3DB359B8B8B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trees", "Trees\Trees.csproj", "{446FC381-D074-4DED-A1AF-3DB359B8B8B3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PRNG", "PRNG\PRNG.csproj", "{7A8BC99D-4453-41B1-B328-6388F5106474}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{446FC381-D074-4DED-A1AF-3DB359B8B8B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{446FC381-D074-4DED-A1AF-3DB359B8B8B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{446FC381-D074-4DED-A1AF-3DB359B8B8B3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7A8BC99D-4453-41B1-B328-6388F5106474}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7A8BC99D-4453-41B1-B328-6388F5106474}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7A8BC99D-4453-41B1-B328-6388F5106474}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7A8BC99D-4453-41B1-B328-6388F5106474}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
