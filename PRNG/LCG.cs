@@ -32,12 +32,14 @@ namespace PRNG
         /// <returns></returns>
         public int Next(int min, int max)
         {
+            // TODO: Possible improvement:
+            // Add rejection sampling
             int diff = max - min;
             int next = Next();
             return ((next * diff) / m) + min;
 
             // inferior!
-            return (next % (diff + 1)) + min;
+            // return (next % (diff + 1)) + min;
         }
     }
 }
