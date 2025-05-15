@@ -2,10 +2,45 @@
 
 using AlgorithmExamples;
 
-int[] unsorted = new int[] { 39, 45, 8, 16, 14, 37, 38 };
 
-Console.WriteLine(
-    String.Join(", ", SortingAlgorithms.MergeSort(unsorted)));
+List<double> numbersToSort = new List<double>();
+for (int i = 0; i < 10; i++)
+{
+    numbersToSort.Add(10 * Random.Shared.NextDouble());
+}
+
+
+int testRuns = 10;
+
+for (int r = 0; r < testRuns; r++)
+{
+    List<int> unsortedOriginal = new List<int>();
+
+    int n = 10000;
+    int maxValue = 10001;
+
+    for (int i = 0; i < n; i++)
+    {
+        unsortedOriginal.Add(Random.Shared.Next(maxValue));
+    }
+
+    int[] quickSortArray = unsortedOriginal.ToArray();
+    SortingAlgorithms.QuickSort(quickSortArray);
+
+    int[] nativeSortArray = unsortedOriginal.ToArray();
+    Array.Sort(nativeSortArray);
+
+    if (quickSortArray.SequenceEqual(nativeSortArray))
+    {
+        Console.WriteLine("Success!");
+    }
+    else
+    {
+        Console.WriteLine("Not equal - check your work!");
+    }
+}
+//Console.WriteLine(
+//    String.Join(", ", SortingAlgorithms.MergeSort(unsorted)));
 
 /*
 int[] problemSizes = new int[] { 2, 4, 8, 16, 32, 64, 128 };

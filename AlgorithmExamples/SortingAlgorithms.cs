@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Trees;
 
 namespace AlgorithmExamples
 {
@@ -86,5 +88,79 @@ namespace AlgorithmExamples
             return output;
         }
 
+
+        public static void QuickSort(int[] a)
+        {
+            // Start a quicksort on the array from position 0 to position length - 1 (both inclusive)
+            quickSort(a, 0, a.Length - 1);
+        }
+
+        private static void quickSort(int[] a, int lo, int hi)
+        {
+            // stopping condition
+            if (hi <= lo)
+            {
+                return;
+            }
+
+            // These two steps are included in a single method call
+            // Step 1: Select pivot
+            // Step 2: Partition
+            
+            // The return value is the index of the pivot AFTER partitioning!
+            int pivotIndex = SelectPivotAndPartition(a, lo, hi);
+
+            // any values in positions lo up to pivotIndex - 1, are smaller than the pivot
+            quickSort(a, lo, pivotIndex - 1);
+
+            // any values in positions pivotIndex + 1 up to hi, are larger than the pivot
+            quickSort(a, pivotIndex + 1, hi);
+
+            // when the method ends, all elements between lo and hi are sorted
+        }
+
+        private static int SelectPivotAndPartition(int[] a, int lo, int hi)
+        {
+            // this extra code, will select an element at random and swap it with the leftmost position
+            // this ensure that the pivot selected will be chosen at random
+            // swap a random element with the lo position
+            // adding this line is equivalent to selecting a pivot at random
+            // a.Swap(lo, Random.Shared.Next(lo, hi + 1));
+
+            // leftmost pivot
+            int pivotIndex = lo;
+            int pivotValue = a[pivotIndex];
+
+            // compare every element between lo and hi (inclusive) against the pivot
+            // place all the elements smaller than the pivot to the "left"
+            // all elements larger (or equal) than the pivot to the "right"
+
+            List<int> left = new List<int>();
+            List<int> right = new List<int>();
+
+            for (int i = lo; i <= hi; i++)
+            {
+                if (i == pivotIndex)
+                    continue;
+
+                // compare element at position i (from lo to hi INCLUSIVE) with the pivot
+                if (a[i] < pivotValue)
+                {
+                    left.Add(a[i]);
+                }
+                else // a[i] >= pivotValue
+                {
+                    right.Add(a[i]);
+                }
+            }
+
+            // place everything back in order
+            left.CopyTo(a, lo);
+            int finalPivotIndex = lo + left.Count;
+            a[finalPivotIndex] = pivotValue;
+            right.CopyTo(a, finalPivotIndex + 1);
+
+            return finalPivotIndex;
+        }
     }
 }
